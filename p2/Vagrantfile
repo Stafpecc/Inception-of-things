@@ -1,0 +1,27 @@
+Vagrant.configure(2) do |config| 
+
+    NODES = [
+        { :hostname => "tariniS", :ip => "192.168.56.110", :cpus => "2", :mem => "2048", :type => "server"}
+    ]
+
+    config.vm.box = "ubuntu/jammy64"
+
+    NODES.each do |node|
+        config.vm.define node[:hostname] do |cfg|
+            cfg.vm.hostname = node[:hostname]
+            cfg.vm.network "private_network", ip: node[:ip]
+
+            cfg.vm.provider "virtualbox" do |v|
+                v.customize ["modifyvm", :id, "--cpus", node[:cpus]]
+                v.customize ["modifyvm", :id, "--memory", node[:mem]]
+                v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+                v.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
+                v.customize ["modifyvm", :id, "--name", node[:hostname]]
+            end
+
+            cfg.vm.provision "shell", inline: "ethtool -K enp0s8 tx off rx off gso off gro off tso off", run: "always"
+            cfg.vm.provision "shell", path: "scripts/install_k3s_server.sh"
+            cfg.vm.provision "shell", inline: "kubectl apply -f /vagrant/confs/"
+        end
+    end
+end
