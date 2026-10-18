@@ -14,22 +14,22 @@ all: up
 
 .PHONY: up
 up:
-	echo "$(GREEN)Starting VMs...$(RESET)"
+	echo "$(GREEN)Starting VM...$(RESET)"
 	$(VAGRANT) up
 
 .PHONY: halt
 halt:
-	echo "$(YELLOW)Stopping VMs...$(RESET)"
+	echo "$(YELLOW)Stopping VM...$(RESET)"
 	$(VAGRANT) halt
 
 .PHONY: reload
 reload:
-	echo "$(YELLOW)Reloading VMs...$(RESET)"
+	echo "$(YELLOW)Reloading VM...$(RESET)"
 	$(VAGRANT) reload
 
 .PHONY: destroy
 destroy:
-	echo "$(RED)Destroying VMs...$(RESET)"
+	echo "$(RED)Destroying VM...$(RESET)"
 	$(VAGRANT) destroy -f
 
 .PHONY: re
@@ -58,14 +58,14 @@ clean: destroy
 .PHONY: help
 help:
 	echo "$(PURPLE)╔══════════════════════════════════════════╗$(RESET)"
-	echo "$(PURPLE)║        Inception-of-Things - P1          ║$(RESET)"
+	echo "$(PURPLE)║        Inception-of-Things - P2          ║$(RESET)"
 	echo "$(PURPLE)╚══════════════════════════════════════════╝$(RESET)"
 	echo ""
 	echo "$(GREEN)VM lifecycle:$(RESET)"
-	echo "  make up          - create/start both VMs"
-	echo "  make halt        - stop both VMs"
-	echo "  make reload      - restart VMs (reload config)"
-	echo "  make destroy     - delete both VMs"
+	echo "  make up          - create/start VM"
+	echo "  make halt        - stop VM"
+	echo "  make reload      - restart VM (reload config)"
+	echo "  make destroy     - delete VM"
 	echo "  make re          - destroy + up (fresh rebuild)"
 	echo ""
 	echo "$(YELLOW)Inspect:$(RESET)"
