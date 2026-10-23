@@ -1,0 +1,6 @@
+flannel-iface: enp0s8
+disable:
+  - traefik
+  - servicelb
+  - metrics-server
+write-kubeconfig-mode: "0644"

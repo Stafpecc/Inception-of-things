@@ -1,6 +1,12 @@
 #!/bin/bash
+set -eo pipefail
 
-curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--node-ip=192.168.56.110 --flannel-iface=enp0s8 --tls-san=192.168.56.110 --disable traefik --disable servicelb --disable metrics-server --write-kubeconfig-mode=644" sh -
+rm -f /vagrant/node-token
+
+mkdir -p /etc/rancher/k3s
+cp /vagrant/confs/server.yaml /etc/rancher/k3s/config.yaml
+
+curl -sfL https://get.k3s.io | INSTALL_K3S_EXEC="--node-ip=$NODE_IP --tls-san=$NODE_IP" sh -
 
 while [ ! -f /var/lib/rancher/k3s/server/node-token ]; do
   sleep 1

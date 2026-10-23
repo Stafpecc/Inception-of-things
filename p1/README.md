@@ -1,3 +1,8 @@
+# Layout
+
+- `confs/server.yaml` / `confs/agent.yaml`: static K3s settings, copied to `/etc/rancher/k3s/config.yaml` before install
+- IP-dependent flags (`--node-ip`, `--tls-san`, `K3S_URL`) are passed as CLI flags, built from the `SERVER_IP` / `NODE_IP` env vars set in the Vagrantfile, so IPs are only defined there
+
 # K3s Server Configuration Flags
 
 | Flag | Why I added it |
@@ -21,6 +26,7 @@
 
 | Setting | Why |
 |---|---|
+| `box_url` pointing to cloud-images.ubuntu.com | The subject requires the box to come from the distribution itself, not the HashiCorp registry |
 | `ethtool -K enp0s8 tx off rx off gso off gro off tso off` (with `run: "always"`) | Fixes a network offloading bug that was hanging the TLS handshake between the two VMs on the private interface |
 
 # Ressources

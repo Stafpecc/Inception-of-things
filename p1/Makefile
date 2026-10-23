@@ -31,6 +31,7 @@ reload:
 destroy:
 	echo "$(RED)Destroying VMs...$(RESET)"
 	$(VAGRANT) destroy -f
+	rm -f node-token
 
 .PHONY: re
 re: destroy up
@@ -48,12 +49,12 @@ ssh-server:
 .PHONY: ssh-worker
 ssh-worker:
 	echo "$(CYAN)Connecting to worker node...$(RESET)"
-	$(VAGRANT) ssh asekkakSW
+	$(VAGRANT) ssh tariniSW
 
 .PHONY: nodes
 nodes:
 	echo "$(YELLOW)Checking K3s nodes from server...$(RESET)"
-	$(VAGRANT) ssh tariniS -c "sudo kubectl get nodes -o wide"
+	$(VAGRANT) ssh tariniS -c "kubectl get nodes -o wide"
 
 .PHONY: clean
 clean: destroy
@@ -79,7 +80,7 @@ help:
 	echo ""
 	echo "$(CYAN)Access:$(RESET)"
 	echo "  make ssh-server  - ssh into tariniS"
-	echo "  make ssh-worker  - ssh into asekkakSW"
+	echo "  make ssh-worker  - ssh into tariniSW"
 	echo ""
 	echo "$(RED)Cleanup:$(RESET)"
 	echo "  make clean       - destroy + remove .vagrant cache"
